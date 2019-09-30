@@ -3,6 +3,8 @@
 
 # pylint: disable=line-too-long
 # pylint: disable=superfluous-parens
+from __future__ import absolute_import, print_function
+
 import argparse
 import datetime
 import errno
@@ -12,10 +14,19 @@ import re
 import uuid
 import subprocess
 import sys
-import Tkinter as tk
-import ttk
-import tkFileDialog
 import pytz
+
+# Tkinter
+try:
+    # Python 3
+    import tkinter as tk
+    from tkinter import ttk
+    from tkinter import filedialog as tkFileDialog
+except ImportError:
+    # Python 2
+    import Tkinter as tk
+    import ttk
+    import tkFileDialog
 
 # Imports specifically for FoundationPlist
 # PyLint cannot properly find names inside Cocoa libraries, so issues bogus
@@ -65,8 +76,8 @@ class App(tk.Frame):
         self.master.protocol('WM_DELETE_WINDOW', self.click_quit)
         self.master.bind('<Return>', self.click_save)
 
-        x = (self.master.winfo_screenwidth() - self.master.winfo_reqwidth()) / 2
-        y = (self.master.winfo_screenheight() - self.master.winfo_reqheight()) / 4
+        x = (self.master.winfo_screenwidth() - self.master.winfo_reqwidth()) // 2
+        y = (self.master.winfo_screenheight() - self.master.winfo_reqheight()) // 4
         self.master.geometry("+{}+{}".format(x, y))
 
         self.master.config(menu=tk.Menu(self.master))
@@ -386,9 +397,9 @@ class App(tk.Frame):
 
     @staticmethod
     def _list_signing_certs():
-        output = subprocess.check_output(
+        output = str(subprocess.check_output(
             ['/usr/bin/security', 'find-identity', '-p', 'codesigning', '-v']
-        ).split('\n')
+        )).split('\n')
 
         cert_list = ['No']
         for i in output:
@@ -584,7 +595,7 @@ class PrivacyProfiles(object):
             # exist because skip forward/backward in DST change over, an exception will be raised.
             try:
                 local_time = timezone.localize(local_time, is_dst=None)
-            except (pytz.exceptions.AmbiguousTimeError, pytz.exceptions.NonExistentTimeError), e:
+            except (pytz.exceptions.AmbiguousTimeError, pytz.exceptions.NonExistentTimeError) as e:
                 # If an AmbiguousTimeError occurs, it is likely because that time has occurred more than once.
                 # For example, 2002-10-27 01:30 happened twice in the US/Eastern timezone when DST ended.
                 # If a NonExistentTimeError occurs, it is because that particular point in time has not/does not occur.

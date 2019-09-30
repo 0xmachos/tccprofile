@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from __future__ import absolute_import, print_function
+
 import os
 import sqlite3
 import sys
@@ -69,7 +71,7 @@ class ReadTCC():
 
     def read_db(self):
         if self.tcc_db.startswith('/Library') and os.getuid() != 0:
-            print 'You must be root to read {}'.format(self.tcc_db)
+            print('You must be root to read {}'.format(self.tcc_db))
             sys.exit(1)
         else:
             self.sqlite.connect(self.tcc_db)
@@ -79,7 +81,7 @@ class ReadTCC():
                 print(' {:<35} | {}'.format('Service', 'Client'))
                 print('-----------------------------------------------------------------------')
                 for service, client in query:
-                    print (' {:<35} | {}'.format(service, client))
+                    print(' {:<35} | {}'.format(service, client))
             self.sqlite.disconnect(self.tcc_db)
 
 

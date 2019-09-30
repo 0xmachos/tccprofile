@@ -1,6 +1,8 @@
 #!/usr/bin/python
 """Uses python's pprint to 'pretty print' the entitlements of an app (if they exist) that has been codesigned."""
 
+from __future__ import absolute_import, print_function
+
 import os
 import plistlib
 import sys
@@ -32,8 +34,8 @@ if len(sys.argv) > 1:
     if sys.argv[1]:
         pprint(entitlements(sys.argv[1]))
     else:
-        print usage
+        print(usage)
         sys.exit(1)
 else:
-    print usage
+    print(usage)
     sys.exit(1)

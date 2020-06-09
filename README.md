@@ -1,8 +1,10 @@
-# tccprofile
-
 # STATUS Update
 This repo is now archive only. I am no longer developing this. The archive will be moved to a private repo 2020-06-13.
 Please fork this ASAP if you wish to continue using it. If someone wants to carry on supporting this, then an attribution to the author/s is appreciated.
+
+https://github.com/jamf/PPPC-Utility can be used as an alternative.
+
+## tccprofile
 
 `tccprofile.py` can be used to create a configuration profile containing Privacy Preferences Policy Control Payload's for code signed applications/binaries or code signed scripts on macOS Mojave 10.14.
 
